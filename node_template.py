@@ -24,4 +24,10 @@ class SampleNode:
         #Advertise intent to publish to topics, queue_size limits amount of queued messages if subscriber not receiving fart enough
         self.sample_pub = rospy.Publisher("topic_name", String, queue_size=10)
         
-        #
+    def sample_function:
+        #stuff that you want it to do when it gets a subscribe message
+
+if __name__ == '__main__':
+    rospy.init_node('node_name')
+    node = SampleNode()
+    rospy.spin()
