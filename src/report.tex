@@ -30,6 +30,7 @@
                         % which can be found as esplatex.ps and epslatex.pdf
                         % at: http://www.ctan.org/tex-archive/info/
 
+\usepackage{movie15}
 %\usepackage{psfrag}    % Written by Craig Barratt, Michael C. Grant,
                         % and David Carlisle
                         % This package allows you to substitute LaTeX
@@ -137,22 +138,31 @@
 
 % Write abstract here
 \begin{abstract}
-    The short abstract (50-80 words) is intended to give the reader an overview of the work.
+    This material is part of a summer boot camp at MIT Beaver Works where teams of high schoolers compete in the Mini Grand Prix Challenge, an autonomous race of cars around a racetrack. This program, which is based off of the 6.141 Robotics Science and Systems class at MIT and the Robotics IAP, meets on weekdays for eight hours for four weeks. Each day typically consists of three lab periods, a technical lecture, a seminar with guest speakers, and an occasional communications class. 
 \end{abstract}
 
 % Each section begins with a \section{title} command
 \section{Introduction}
     % \PARstart{}{} creates a tall first letter for this first paragraph
-    \IEEEPARstart{T}{his} section introduces the topic and leads the reader on to the main part.
+    \IEEEPARstart{T}{he} purpose of this program is to begin to understand the algorithms and methods used today in autonomous navigation and experiment with them on the 1/10-scale racecar in order to showcase the abilities and limitations in building robust yet fast robotics systems. Some of the tasks given include using the Lidar with PID control to follow a wall, using a ZED Stereo camera to detect a blob, reactive obstacle detection, visual servoing to follow a colored blob, using a color to decide whether to take a turn, and optionally implementing localization and mapping. Much of the class dealt with how to deal with problems inherent to autonomous navigation, like sensor imperfections, inaccuracies in localization and mapping, and speed constraints. The cars used are referred to as RACECAR, which stands for Rapid Autonomous Complex-Environment Competing Ackermann-steering Robot. The cars were pre-built with it’s components prior to the start of the program, which includes the NVIDIA quad-core CPU, the 192-core GPU, an Ackermann-steering system, and a large variety of sensors including a Lidar, camera, and odometer. The teams used ROS, a “meta” operating system for robots that focuses on modularity and interfaces. 
 
 % Main Part
-\section{Main Part}
-    % LaTeX takes complete care of your document layout ...
-    The presentation's content is summarized in the report in 4~pages.
-    % ... but you can insert a line break manually with two backslashes, if needed: \\
-    The author should fill, but not exceed, this space. \\
-    The report should be a self-contained report, so that it can be understood without studying additional literature.
-
+\section{Week 1}
+\subsection{Technical Goal}
+The goal in the first week was to get experience in working with the racecar and learn about control systems by means of a wall following challenge. 
+\subsection{Approach}
+The teams were required to use a Lidar to sense the wall but they were free to implement a state controller of their choice. [Go into details about state controllers]The simplest of the methods was using a Bang Bang controller, which would sense if the robot was too close or too far and if it was too close, it would turn away and if too far, turn towards. A slightly more sophisticated version was to implement a PID(Proportional Integral Derivative) controller which does calculations on the error value to create a smooth oscillation to correct for the robot’s distance. In addition, for calculating the error distance, there was an additional consideration of which laser scan data to use. Since angling of the robot could easily throw off the reading if only one measurement is taken, a two point controller could account for this with basic trigonometry. 
+\begin{equation}
+\end{equation}
+Since there were so many options and there wasn’t enough time to test all of them, we wrote code implementation of all of the separate features, like the PID controller and error calculation, so we could test each systematically. We also decided to approach the challenge by starting simple and incrementally improving it
+\subsection{Process}
+We started with the bang bang controller and as that worked, we slowly added a PID controller with 2-point control. For the bang bang controller, it was just a very simple algorithm that detected the amount of error in the car’s distance from the wall. If the error was too big, it would turn towards the wall, and if the error was too small, it would turn away from the wall. The bang bang controller worked well to turn at a moderately steep curve. 
+\par As seen in the video, it worked well despite being a little jerky. The problem with the Bang Bang control was when we started the robot far away from the line. Since the turning rate was independent from the actual distance from the wall, when the robot was far away, it would turn back at a slower rate than it intuitively should given the distance away. Even worse was that when the robot was close to the line, it would continue to use too steep of a steering angle, resulting in inefficient oscillations and jerkiness. 
+\par We next tried implementing a P controller in order to control the oscillations more. In a P controller, the error is proportionally scaled to be the steering angle, so bigger error would result in more severe turning and on the other hand, smaller error would result in a more subtle turn. It took a while to figure out the Kp value. With higher Kp values, we found that we could adjust the rate of responsiveness. We found that Kp values near 1.0 achieved the best balance of reactiveness but not overreaction. 
+\par Afterwards, we tried moving to a PD controller. The Derivative portion would calculate the rate of change of the error and limit the change in order to attempt to smooth out the oscillations. We first found that changing the Kd value would lower the optimal Kp value. After a lot of thorough tuning of the Kp and Kd constants, we found that incorporating derivative caused jerkiness no matter what value we had it at. Although it was jerky we also found that it was  necessary for adjusting when really far. When we tried the P controller and high distances, it would sometimes turn back so quickly that it would smash into the wall. With the PD controller, we found that even though the execution was shaky, it allowed the robot to not crash into the wall. Then we thought that there was no point of tuning the PD controller if we had to retune for the PID controller so we tried testing the PID controller. In the end, a large majority of the challenge had to do with finding the right constants. The setup that ended up working well was with a Kp of 1, a Kd of .05, and a Ki of 0. With more time, we could have continued perfecting the numbers, but they were sufficiently good for this challenge [research values for P, I, D]
+\subsection{Results}
+The challenge consisted of a straight left and right wall that the robot should be able to follow. Three time trials were recorded on the different sides starting the robot at different distances, then a challenge test was tried where the robot was put in the center of the 2-lane track, requiring agile recovery to avoid crashing into the wall. We learned that although there is a lot a theoretical research on optimal values for the PID controller, what happens in real life is vastly different. A lot of testing is required. According to “Kyle from JPL”, although the guess and check method was tedious, it was much easier than the alternative. By week one, we got a good idea of this problem in robotics, that what should happen or what happens in simulation is not a substitute for real life testing
+\includemovie{5cm}{5cm}{giphy.gif}
 \section{Format}
     The report can be written in \LaTeX{} or Microsoft Word, but \LaTeX{} is definitely preferred.
     Its appearance should be as close to this document as possible to achieve consistency in the proceedings.
