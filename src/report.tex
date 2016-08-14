@@ -29,8 +29,7 @@
                         % Imported Graphics in LaTeX2e" by Keith Reckdahl
                         % which can be found as esplatex.ps and epslatex.pdf
                         % at: http://www.ctan.org/tex-archive/info/
-
-\usepackage{movie15}
+\usepackage{tikz}
 %\usepackage{psfrag}    % Written by Craig Barratt, Michael C. Grant,
                         % and David Carlisle
                         % This package allows you to substitute LaTeX
@@ -104,7 +103,7 @@
                         % and documentation can be obtained at:
                         % http://www.ctan.org/tex-archive/macros/latex/required/amslatex/math/
 
-
+\usepackage{gensymb}
 
 % Other popular packages for formatting tables and equations include:
 
@@ -138,23 +137,31 @@
 
 % Write abstract here
 \begin{abstract}
-    This material is part of a summer boot camp at MIT Beaver Works where teams of high schoolers compete in the Mini Grand Prix Challenge, an autonomous race of cars around a racetrack. This program, which is based off of the 6.141 Robotics Science and Systems class at MIT and the Robotics IAP, meets on weekdays for eight hours for four weeks. Each day typically consists of three lab periods, a technical lecture, a seminar with guest speakers, and an occasional communications class. 
+    This material is part of a summer boot camp at MIT Beaver Works where teams of high schoolers compete in the Mini Grand Prix Challenge, an autonomous car race around a track. This program, which is based off the 6.141 Robotics Science and Systems class at MIT and the Robotics IAP, meets on weekdays for eight hours for four weeks. Each day typically consists of three lab periods, a technical lecture, a seminar with guest speakers, and an occasional communications class. 
 \end{abstract}
-
 % Each section begins with a \section{title} command
 \section{Introduction}
     % \PARstart{}{} creates a tall first letter for this first paragraph
     \IEEEPARstart{T}{he} purpose of this program is to begin to understand the algorithms and methods used today in autonomous navigation and experiment with them on the 1/10-scale racecar in order to showcase the abilities and limitations in building robust yet fast robotics systems. Some of the tasks given include using the Lidar with PID control to follow a wall, using a ZED Stereo camera to detect a blob, reactive obstacle detection, visual servoing to follow a colored blob, using a color to decide whether to take a turn, and optionally implementing localization and mapping. Much of the class dealt with how to deal with problems inherent to autonomous navigation, like sensor imperfections, inaccuracies in localization and mapping, and speed constraints. The cars used are referred to as RACECAR, which stands for Rapid Autonomous Complex-Environment Competing Ackermann-steering Robot. The cars were pre-built with it’s components prior to the start of the program, which includes the NVIDIA quad-core CPU, the 192-core GPU, an Ackermann-steering system, and a large variety of sensors including a Lidar, camera, and odometer. The teams used ROS, a “meta” operating system for robots that focuses on modularity and interfaces. 
-
 % Main Part
 \section{Week 1}
 \subsection{Technical Goal}
 The goal in the first week was to get experience in working with the racecar and learn about control systems by means of a wall following challenge. 
 \subsection{Approach}
-The teams were required to use a Lidar to sense the wall but they were free to implement a state controller of their choice. [Go into details about state controllers]The simplest of the methods was using a Bang Bang controller, which would sense if the robot was too close or too far and if it was too close, it would turn away and if too far, turn towards. A slightly more sophisticated version was to implement a PID(Proportional Integral Derivative) controller which does calculations on the error value to create a smooth oscillation to correct for the robot’s distance. In addition, for calculating the error distance, there was an additional consideration of which laser scan data to use. Since angling of the robot could easily throw off the reading if only one measurement is taken, a two point controller could account for this with basic trigonometry. 
+The teams were required to use a Lidar to sense the wall but they were free to implement a state controller of their choice. [Go into details about state controllers]The simplest of the methods was using a Bang Bang controller, which would sense if the robot was too close or too far and if it was too close, it would turn away and if too far, turn towards. A slightly more sophisticated version was to implement a PID(Proportional Integral Derivative) controller which does calculations on the error value to create a smooth oscillation to correct for the robot’s distance. In addition, for calculating the error distance, there was an additional consideration of which laser scan data to use. Since angling of the robot could easily throw off the reading if only one measurement is taken, a two point controller could account for this with basic trigonometry. Given two arbitrary angles to take the laser measurements $d_1$ and $d_2$, if the angle $\theta$ is known the following formula can calculate the true distance between the wall. [add figure label]. 
+\begin{tikzpicture}
+\draw[rotate around={30:(-1, 0.5)}] (0,3) rectangle(1.5,4);
+\draw (-2,2)--(3,2) node at (1.1,2) [below] {$b$};
+\draw [dashed] (-1,2)--(-1,3.3) node[midway, left]{$x$};
+\draw (-1,3.3)--(0.5,2) node[midway, left]{$d_1$};
+\draw (-1,3.3)--(2,2) node[midway, above]{$d_2$};
+\draw node at (-0.15,2.5) [above] {$\theta$};
+\end{tikzpicture}
 \begin{equation}
+x = \frac{d_1d_2sin(\theta)}{\sqrt{d_1^2+d_2^2-2d_1d_2cos(\theta)}}
 \end{equation}
-Since there were so many options and there wasn’t enough time to test all of them, we wrote code implementation of all of the separate features, like the PID controller and error calculation, so we could test each systematically. We also decided to approach the challenge by starting simple and incrementally improving it
+Our team however decided to find the true distance to the wall by finding the minimum point in a range of laser distances, since mathematically, the true perpendicular distance is the shortest distance. This assumes that the robot is rotated such that the minimum distance is in the range of laser values taken. Given the parameters of the wall follow challenge, we thought this was a safe assumption. The points taken from the laser were in the range starting from 2.5\degree behind the robot to 5\degree ahead of the robot.
+\par Since there were so many options and there wasn’t enough time to test all of them, we wrote code implementation of all of the separate features, like the PID controller and error calculation, so we could test each systematically. We also decided to approach the challenge by starting simple and incrementally improving it.
 \subsection{Process}
 We started with the bang bang controller and as that worked, we slowly added a PID controller with 2-point control. For the bang bang controller, it was just a very simple algorithm that detected the amount of error in the car’s distance from the wall. If the error was too big, it would turn towards the wall, and if the error was too small, it would turn away from the wall. The bang bang controller worked well to turn at a moderately steep curve. 
 \par As seen in the video, it worked well despite being a little jerky. The problem with the Bang Bang control was when we started the robot far away from the line. Since the turning rate was independent from the actual distance from the wall, when the robot was far away, it would turn back at a slower rate than it intuitively should given the distance away. Even worse was that when the robot was close to the line, it would continue to use too steep of a steering angle, resulting in inefficient oscillations and jerkiness. 
@@ -162,8 +169,61 @@ We started with the bang bang controller and as that worked, we slowly added a P
 \par Afterwards, we tried moving to a PD controller. The Derivative portion would calculate the rate of change of the error and limit the change in order to attempt to smooth out the oscillations. We first found that changing the Kd value would lower the optimal Kp value. After a lot of thorough tuning of the Kp and Kd constants, we found that incorporating derivative caused jerkiness no matter what value we had it at. Although it was jerky we also found that it was  necessary for adjusting when really far. When we tried the P controller and high distances, it would sometimes turn back so quickly that it would smash into the wall. With the PD controller, we found that even though the execution was shaky, it allowed the robot to not crash into the wall. Then we thought that there was no point of tuning the PD controller if we had to retune for the PID controller so we tried testing the PID controller. In the end, a large majority of the challenge had to do with finding the right constants. The setup that ended up working well was with a Kp of 1, a Kd of .05, and a Ki of 0. With more time, we could have continued perfecting the numbers, but they were sufficiently good for this challenge [research values for P, I, D]
 \subsection{Results}
 The challenge consisted of a straight left and right wall that the robot should be able to follow. Three time trials were recorded on the different sides starting the robot at different distances, then a challenge test was tried where the robot was put in the center of the 2-lane track, requiring agile recovery to avoid crashing into the wall. We learned that although there is a lot a theoretical research on optimal values for the PID controller, what happens in real life is vastly different. A lot of testing is required. According to “Kyle from JPL”, although the guess and check method was tedious, it was much easier than the alternative. By week one, we got a good idea of this problem in robotics, that what should happen or what happens in simulation is not a substitute for real life testing
-\includemovie{5cm}{5cm}{giphy.gif}
-\section{Format}
+
+\section{Week 2}
+\subsection{Technical goals}
+The challenge from this week was to use the ZED camera to sense a colored blob and use visual servoing to follow the blob. When the car was close enough, the robot had to make a correct turn based on the color of the wall where green indicated a right turn and red indicated a left turn. Afterwards, the program had to successfully wall follow until a certain point. 
+\subsection{Approach}
+We started with getting a good blob detections algorithm, then worked on a simple but effective visual servoing method that could then transition into the wall following modified from last week. We split up the task into a blob detection node, a blob follow node, and a turn node in order to facilitate testing and so we could split up the work effectively. 
+\subsection{Process}
+\par We first focused on the image detection, then split people up to work on various aspects of the visual servoing and wall following. In a lab session, we worked individually on each getting good blob detection. Everyone in the team put the working parts of their code together and we built off the final one. We split up the team, giving different people different tasks. Some members of the group worked on a visual servoing method using a bang bang method based on height and x position of the blob. If the blob was too far it would go forwards, if it was close enough it would stop. If the x position of the blob was on the right side of the screen, the robot turned right. If the x position of the blob was on the left side, the robot turned left. As expected with a bang bang controller, it was jerky and when we were close to the target, it had trouble getting oriented because if it was a little off center, it would turn back too much and be stuck in an oscillation cycle. We decided to implement a PID controller into our visual servo, which helped with this issue. 
+\par While some people were working on that, others worked on taking our wall-follow code from last week and modifying it and optimizing it for our situation. We didn’t focus on tuning this part too much because we knew it functioned from last week. Another sub-group worked on setting up the structure of the task and how the nodes would communicate. We were able to successfully integrate them together. Due to miscommunication, we realized that no one had programmed the turn for when it got to the wall. We struggled to get that part working for the race because of lack of testing time. 
+\subsection{Results}
+At the very last minute we were able to get the robot to turn and follow properly when it got to the wall. Unfortunately, it only worked on the green side because we figured out later that there was a bug in our code where the isGreen variable we were modifying was a local variable. Then during the race, our robot didn’t move probably due to lack of battery. After we charged it, the program did not work the same way and the gears had a glitch, so unfortunately we couldn’t finish. Importance of testing
+\section{Week 3}
+\subsection{Technical goals}
+Our goal was to use reactive-based planning-based on what the robot can see locally in order to explore unbounded space while avoiding obstacles. We also had to detect blobs along the way and save the picture with the blob color and locations indicated. To add on from the image detection from last week, additional colors to detect were added(blue and yellow), and there was a challenge task to detect images of Ari, Sertac, a cat, and a robot. 
+\subsection{Approach}
+Based on the open-ended nature of this week’s assignment, we had a team meeting where we discussed a lot of possible methods for obstacle avoidance and ways to take the shortcut. We first focused on ways to get around without obstacles. We had different people explore different ideas. In the end, we ended up using a potential field method that we learned about in a lecture, which was the most effective.
+\subsection{Process}
+Here are the methods we explored in the order we considered them
+\subsubsection{Right wall follow}
+If there are no obstacles and we’re not supposed to take the shortcut, we thought that a simple wall follow should be sufficient. However, we found that because of the sharp corner, it wouldn’t be an option. As the robot approached the corner, it could never determine that it should turn until it had already run into the wall, since the robot looks out to the side and not directly in front of it. After we adjusted the field of vision to angled further up front, it was able to turn at the corner only at very low speeds. 
+\subsubsection{Equal Distance wall following}
+Assuming there are no obstacles, an effective way to take the shortcut would be to simply follow the wall on both sides by trying to keep the distances on the left and the right the same. When the robot got to the shortcut, it would see a large spike in the laser reading for the left side and therefore turn left to account for it. However, it was determined that this model would break down with obstacles. 
+\subsubsection{Obstacle detect}
+Look ahead and if obstacles are detected on the left side, take the right lane and vice versa. If both left lane and right lane have obstacles, take the center lane. The idea of changing the desired distance of the wall follow based on where the obstacles were was solid, but too many assumptions were made in the model
+\subsubsection{Left/Right Wall Follow}
+If there are no obstacles, follow the left wall the whole time, then switch to following the right wall when there is the shortcut to ensure that the robot takes the long way across.
+\subsubsection{State machine}
+We explored enough options for the case of wanting to take the shortcut and not taking the shortcut, along with how to avoid obstacles that based on where it is, that we could incorporate them all into a state machine. [Possible elaborate]
+\subsubsection{Open space}
+Use the scanner to find the largest contiguous open space and go there. This method could work well, especially for avoiding obstacles. We ran out of testing time to try it out, however. 
+\subsubsection{Potential field}
+The potential field method uses the idea of charges attracting and repelling to control the robot. The robot is repelled from obstacles, but also repelled from behind so it continues to move. We ended up this method because it was the most robust.
+
+For the blob detections, we used the version we made last week and added in the new colors. We came up with two possible solutions that we could have had working with more time. The first one was to average the HSV values of the pixels in each of the challenge images and hope that they are different enough that we could distinguish them. This would be messed up in different lightings, but since we aren’t penalized for incorrect labelling, we thought it could be worth it. The second method would to do some sort of statistical analysis of the HSV values of the pixels of the original images. Then, we could find the distribution for the images from the ZED camera and compare them to find the closest match. 
+\subsection{Results}
+In the final challenge, we used the potential field method. We ran out of time to execute the challenge images and we weren’t able to tune the color values well, so we missed a lot of colors in the actual challenge. We should have spent more time tuning the colors instead of focusing on the challenge images. We ended up coming in 3rd place with 36 points, which came from detecting four blobs and having two collisions. 
+
+\section{Week 4}
+\subsection{Technical goals}
+\subsubsection Tech Challenge 1
+\subsubsection Tech Challenge 2
+\subsubsection Tech Challenge 3
+\subsection{Approach}
+how did we set about work and why
+\subsection{Process}
+Step by step process of what we did
+\subsection{Results}
+Results - what was tested, what was accomplished
+
+\section{Conclusion}
+Summarize goals, results, failures \\
+What did we learn \\ 
+What we’ll do differently next time \\
+
+\section{How to do stuff}
     The report can be written in \LaTeX{} or Microsoft Word, but \LaTeX{} is definitely preferred.
     Its appearance should be as close to this document as possible to achieve consistency in the proceedings.
 
