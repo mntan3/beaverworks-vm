@@ -1,0 +1,48 @@
+This is BibTeX, Version 0.99d (TeX Live 2016/Arch Linux)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: report.aux
+The style file: unsrt.bst
+Database file #1: report.bib
+Warning--I didn't find a database entry for "HOP96"
+You've used 3 entries,
+            1791 wiz_defined-function locations,
+            457 strings with 3898 characters,
+and the built_in function-call counts, 356 in all, are:
+= -- 28
+> -- 6
+< -- 0
++ -- 4
+- -- 1
+* -- 8
+:= -- 47
+add.period$ -- 7
+call.type$ -- 3
+change.case$ -- 2
+chr.to.int$ -- 0
+cite$ -- 3
+duplicate$ -- 15
+empty$ -- 55
+format.name$ -- 1
+if$ -- 87
+int.to.chr$ -- 0
+int.to.str$ -- 3
+missing$ -- 0
+newline$ -- 16
+num.names$ -- 1
+pop$ -- 21
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 12
+stack$ -- 0
+substring$ -- 0
+swap$ -- 3
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 0
+while$ -- 1
+width$ -- 4
+write$ -- 27
+(There was 1 warning)

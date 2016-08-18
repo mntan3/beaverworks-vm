@@ -2,7 +2,7 @@
 
 % some very useful LaTeX packages include:
 
-%\usepackage{cite}      % Written by Donald Arseneau
+\usepackage{cite}      % Written by Donald Arseneau
                         % V1.6 and later of IEEEtran pre-defines the format
                         % of the cite.sty package \cite{} output to follow
                         % that of IEEE. Loading the cite package will
@@ -29,6 +29,7 @@
                         % Imported Graphics in LaTeX2e" by Keith Reckdahl
                         % which can be found as esplatex.ps and epslatex.pdf
                         % at: http://www.ctan.org/tex-archive/info/
+\graphicspath{ {images/} }
 \usepackage{tikz}
 %\usepackage{psfrag}    % Written by Craig Barratt, Michael C. Grant,
                         % and David Carlisle
@@ -67,7 +68,6 @@
                         % systems. The latest version can be obtained at:
                         % http://www.ctan.org/tex-archive/macros/latex/contrib/other/misc/
                         % Read the url.sty source comments for usage information.
-
 %\usepackage{stfloats}  % Written by Sigitas Tolusis
                         % Gives LaTeX2e the ability to do double column
                         % floats at the bottom of the page as well as the top.
@@ -125,7 +125,8 @@
 % *** Do not adjust lengths that control margins, column widths, etc. ***
 % *** Do not use packages that alter fonts (such as pslatex).         ***
 % There should be no need to do such things with IEEEtran.cls V1.6 and later.
-
+\usepackage{float}
+\usepackage[justification=centering]{caption}
 
 % Your document starts here!
 \begin{document}
@@ -142,13 +143,17 @@
 % Each section begins with a \section{title} command
 \section{Introduction}
     % \PARstart{}{} creates a tall first letter for this first paragraph
-    \IEEEPARstart{T}{he} purpose of this program is to begin to understand the algorithms and methods used today in autonomous navigation and experiment with them on the 1/10-scale racecar in order to showcase the abilities and limitations in building robust yet fast robotics systems. Some of the tasks given include using the Lidar with PID control to follow a wall, using a ZED Stereo camera to detect a blob, reactive obstacle detection, visual servoing to follow a colored blob, using a color to decide whether to take a turn, and optionally implementing localization and mapping. Much of the class dealt with how to deal with problems inherent to autonomous navigation, like sensor imperfections, inaccuracies in localization and mapping, and speed constraints. The cars used are referred to as RACECAR, which stands for Rapid Autonomous Complex-Environment Competing Ackermann-steering Robot. The cars were pre-built with it’s components prior to the start of the program, which includes the NVIDIA quad-core CPU, the 192-core GPU, an Ackermann-steering system, and a large variety of sensors including a Lidar, camera, and odometer. The teams used ROS, a “meta” operating system for robots that focuses on modularity and interfaces. 
+    \IEEEPARstart{T}{he} purpose of this program is to begin to understand the algorithms and methods used today in autonomous navigation and experiment with them on a 1/10-scale racecar. Teams could explore the abilities and limitations in building robust yet fast robotics systems. Some of the tasks given include following a wall, detecting a colored blob, following a colored blob, reactive obstacle detection, using a color to decide whether to take a turn, and optionally implementing localization and mapping. Much of the class dealt with how to deal with problems inherent to autonomous navigation, like sensor imperfections, object detection from camera images, and speed constraints. The cars used were referred to as RACECAR, which stands for Rapid Autonomous Complex-Environment Competing Ackermann-steering Robot. The cars were pre-built with it’s components prior to the start of the program, which includes the NVIDIA quad-core CPU, the 192-core GPU, an Ackermann-steering system, and a large variety of sensors including a Lidar, camera, and odometer. The teams used ROS, a “meta” operating system for robots that focuses on modularity, interfaces, and code reuse. \cite{plecture2} 
 % Main Part
 \section{Week 1}
 \subsection{Technical Goal}
-The goal in the first week was to get experience in working with the racecar and learn about control systems by means of a wall following challenge. 
+In the first week, the learning objective was to get experience in working with the sensors and actuation of the robot and learn about control systems. The end-of-week challenge consisted of being able to follow a left and right wall at a desired distanced away starting at various points away from the wall. 
 \subsection{Approach}
-The teams were required to use a Lidar to sense the wall but they were free to implement a state controller of their choice. [Go into details about state controllers]The simplest of the methods was using a Bang Bang controller, which would sense if the robot was too close or too far and if it was too close, it would turn away and if too far, turn towards. A slightly more sophisticated version was to implement a PID(Proportional Integral Derivative) controller which does calculations on the error value to create a smooth oscillation to correct for the robot’s distance. In addition, for calculating the error distance, there was an additional consideration of which laser scan data to use. Since angling of the robot could easily throw off the reading if only one measurement is taken, a two point controller could account for this with basic trigonometry. Given two arbitrary angles to take the laser measurements $d_1$ and $d_2$, if the angle $\theta$ is known the following formula can calculate the true distance between the wall. [add figure label]. 
+The teams were required to use a Lidar to sense the wall but they were free to implement a state controller of their choice. [Go into details about state controllers]
+\subsubsection{Bang Bang Controller}The simplest of the methods was using a Bang Bang controller, which would sense if the robot was too close or too far and if it was too close, it would turn away and if too far, turn towards. 
+\subsubsection{PID Controller}A slightly more sophisticated version was to implement a PID(Proportional Integral Derivative) controller which does calculations on the error value to create a smooth oscillation to correct for the robot’s distance. In addition, for calculating the error distance, there was an additional consideration of which laser scan data to use. The angle of the robot could easily throw off the reading if only one measurement were taken, since the distance measured perpendicular from the robot won't necessarily be the true distance as shown below. \\ 
+\begin{figure}[H]
+\centering
 \begin{tikzpicture}
 \draw[rotate around={30:(-1, 0.5)}] (0,3) rectangle(1.5,4);
 \draw (-2,2)--(3,2) node at (1.1,2) [below] {$b$};
@@ -157,6 +162,9 @@ The teams were required to use a Lidar to sense the wall but they were free to i
 \draw (-1,3.3)--(2,2) node[midway, above]{$d_2$};
 \draw node at (-0.15,2.5) [above] {$\theta$};
 \end{tikzpicture}
+\caption{Diagram of robot}
+\end{figure}
+A two point controller could account for this with basic trigonometry. Given two arbitrary angles to take the laser measurements $d_1$ and $d_2$, if the angle $\theta$ is known the following formula can calculate the true distance between the wall.  
 \begin{equation}
 x = \frac{d_1d_2sin(\theta)}{\sqrt{d_1^2+d_2^2-2d_1d_2cos(\theta)}}
 \end{equation}
@@ -168,11 +176,33 @@ We started with the bang bang controller and as that worked, we slowly added a P
 \par We next tried implementing a P controller in order to control the oscillations more. In a P controller, the error is proportionally scaled to be the steering angle, so bigger error would result in more severe turning and on the other hand, smaller error would result in a more subtle turn. It took a while to figure out the Kp value. With higher Kp values, we found that we could adjust the rate of responsiveness. We found that Kp values near 1.0 achieved the best balance of reactiveness but not overreaction. 
 \par Afterwards, we tried moving to a PD controller. The Derivative portion would calculate the rate of change of the error and limit the change in order to attempt to smooth out the oscillations. We first found that changing the Kd value would lower the optimal Kp value. After a lot of thorough tuning of the Kp and Kd constants, we found that incorporating derivative caused jerkiness no matter what value we had it at. Although it was jerky we also found that it was  necessary for adjusting when really far. When we tried the P controller and high distances, it would sometimes turn back so quickly that it would smash into the wall. With the PD controller, we found that even though the execution was shaky, it allowed the robot to not crash into the wall. Then we thought that there was no point of tuning the PD controller if we had to retune for the PID controller so we tried testing the PID controller. In the end, a large majority of the challenge had to do with finding the right constants. The setup that ended up working well was with a Kp of 1, a Kd of .05, and a Ki of 0. With more time, we could have continued perfecting the numbers, but they were sufficiently good for this challenge [research values for P, I, D]
 \subsection{Results}
-The challenge consisted of a straight left and right wall that the robot should be able to follow. Three time trials were recorded on the different sides starting the robot at different distances, then a challenge test was tried where the robot was put in the center of the 2-lane track, requiring agile recovery to avoid crashing into the wall. We learned that although there is a lot a theoretical research on optimal values for the PID controller, what happens in real life is vastly different. A lot of testing is required. According to “Kyle from JPL”, although the guess and check method was tedious, it was much easier than the alternative. By week one, we got a good idea of this problem in robotics, that what should happen or what happens in simulation is not a substitute for real life testing
-
+The challenge consisted of a straight left and right wall that the robot should be able to follow. Three time trials were recorded on the different sides starting the robot at different distances, then a challenge test was tried where the robot was put in the center of the 2-lane track, requiring agile recovery to avoid crashing into the wall. We learned that although there is a lot a theoretical research on optimal values for the PID controller, what happens in real life is vastly different. A lot of testing is required. According to “Kyle from JPL”, although the guess and check method was tedious, it was much easier than the alternative. By week one, we got a good idea of this problem in robotics, that what should happen or what happens in simulation is not a substitute for real life testing. Our race was able to complete the race with the following scores: \\
+    \begin{table}[!hbt]
+        % Center the table
+        \begin{center}
+        % Title of the table
+        \caption{Final Challenge times}
+        % Table itself: here we have two columns which are centered and have lines to the left, right and in the middle: |c|c|
+        \begin{tabular}{|c|c|}
+            % To create a horizontal line, type \hline
+            \hline
+            % To end a column type &
+            % For a linebreak type \\
+            Left Wall & 8.77 \\
+            \hline
+            Right Wall & 8.85 \\
+            \hline
+        \end{tabular}
+        \end{center}
+    \end{table} \\
+Although we got 8th out of 9 teams, the times were all within .2 seconds of each other so it could have been external factors from our algorithm such as battery level or timer inaccuracy. That being said,with more time the constants could have been more tuned to a more optimum value. 
 \section{Week 2}
 \subsection{Technical goals}
-The challenge from this week was to use the ZED camera to sense a colored blob and use visual servoing to follow the blob. When the car was close enough, the robot had to make a correct turn based on the color of the wall where green indicated a right turn and red indicated a left turn. Afterwards, the program had to successfully wall follow until a certain point. 
+The challenge from this week was to use the ZED camera to sense a colored blob and use visual servoing to follow the blob. When the car was close enough, the robot had to make a correct turn based on the color of the wall where green indicated a right turn and red indicated a left turn. Afterwards, the program had to successfully wall follow until a certain point. The following diagram is taken from the lab handout for the week 2 challenge. \\ 
+\begin{figure}[H]
+\includegraphics[scale=.42]{visual_servo.png}
+\caption{Challenge diagram \cite{vs-handout}} 
+\end{figure}
 \subsection{Approach}
 We started with getting a good blob detections algorithm, then worked on a simple but effective visual servoing method that could then transition into the wall following modified from last week. We split up the task into a blob detection node, a blob follow node, and a turn node in order to facilitate testing and so we could split up the work effectively. 
 \subsection{Process}
@@ -208,16 +238,63 @@ In the final challenge, we used the potential field method. We ran out of time t
 
 \section{Week 4}
 \subsection{Technical goals}
-\subsubsection Tech Challenge 1
-\subsubsection Tech Challenge 2
-\subsubsection Tech Challenge 3
+This week was dedicated to preparation for the Grand Prix Challenge race, but in addition there were two tech challenges that would be informally showcased. 
+\subsubsection{Tech Challenge 1}
+In the first tech challenge, the robot had to publish blob detections while it explored an unstructured space with obstacles.  
+\subsubsection{Tech Challenge 2}
+In the second tech challenge, the robot had to go along the racetrack and look for a colored blob that would be located at a forked intersection. A green blob would indicate an open shortcut that the robot could take while a red blob would indicate that the shortcut was blocked and the robot has to take a longer way around. 
+\subsubsection{Grand Prix Race}
+[Get a picture]
 \subsection{Approach}
 how did we set about work and why
 \subsection{Process}
 Step by step process of what we did
 \subsection{Results}
 Results - what was tested, what was accomplished
-
+\subsubsection{Time trial}
+Our team ranked 1st out of all 9 teams in the time trial with the following times:
+    \begin{table}[!hbt]
+        % Center the table
+        \begin{center}
+        % Title of the table
+        \caption{Time Trial Results}
+        % Table itself: here we have two columns which are centered and have lines to the left, right and in the middle: |c|c|
+        \begin{tabular}{|c|c|c|}
+            % To create a horizontal line, type \hline
+            \hline
+            % To end a column type &
+            % For a linebreak type \\
+			\textbf{Lap \#} & \textbf{Color of blob} & \textbf{Time} \\
+			\hline
+            1 & Green & 28.93\\
+            \hline
+            2 & Red & 33.46 \\
+            \hline
+            3 & Red & 33.28\\
+            \hline
+        \end{tabular}
+        \end{center}
+    \end{table}
+    \begin{table}[!hbt]
+        % Center the table
+        \begin{center}
+        % Title of the table
+		\caption{Final Grand Prix Results}
+        % Table itself: here we have two columns which are centered and have lines to the left, right and in the middle: |c|c|
+        \begin{tabular}{|c|c|}
+            % To create a horizontal line, type \hline
+            \hline
+            % To end a column type &
+            % For a linebreak type \\
+			\textbf{Color} & \textbf{Time} \\
+			\hline
+            Green & 28.00 \\
+            \hline
+            Red & 38.20 \\
+            \hline
+        \end{tabular}
+        \end{center}
+    \end{table}
 \section{Conclusion}
 Summarize goals, results, failures \\
 What did we learn \\ 
@@ -288,32 +365,10 @@ What we’ll do differently next time \\
 
 \section{Conclusion}
     This section summarizes the paper.
-
+\nocite{5}
 % Now we need a bibliography:
-\begin{thebibliography}{5}
-
-    %Each item starts with a \bibitem{reference} command and the details thereafter.
-    \bibitem{HOP96} % Transaction paper
-    J.~Hagenauer, E.~Offer, and L.~Papke. Iterative decoding of binary block
-    and convolutional codes. {\em IEEE Trans. Inform. Theory},
-    vol.~42, no.~2, pp.~429–-445, Mar. 1996.
-
-    \bibitem{MJH06} % Conference paper
-    T.~Mayer, H.~Jenkac, and J.~Hagenauer. Turbo base-station cooperation for intercell interference cancellation. {\em IEEE Int. Conf. Commun. (ICC)}, Istanbul, Turkey, pp.~356--361, June 2006.
-
-    \bibitem{Proakis} % Book
-    J.~G.~Proakis. {\em Digital Communications}. McGraw-Hill Book Co.,
-    New York, USA, 3rd edition, 1995.
-
-    \bibitem{talk} % Web document
-    F.~R.~Kschischang. Giving a talk: Guidelines for the Preparation and Presentation of Technical Seminars.
-    \url{http://www.comm.toronto.edu/frank/guide/guide.pdf}.
-
-    \bibitem{5}
-    IEEE Transactions \LaTeX and Microsoft Word Style Files.
-    \url{http://www.ieee.org/web/publications/authors/transjnl/index.html}
-
-\end{thebibliography}
+\bibliographystyle{unsrt}
+\bibliography{report}
 
 % Your document ends here!
 \end{document}

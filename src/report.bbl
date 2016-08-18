@@ -1,0 +1,18 @@
+\begin{thebibliography}{1}
+
+\bibitem{plecture2}
+M.~T. Boulet.
+\newblock {RACECAR}: Rapid autonomous complex-environment competing
+  ackermann-steering robot.
+\newblock \url{http://peris.mit.edu/racecar/lectures/2015/Lecture2.pdf}, July
+  2016.
+
+\bibitem{vs-handout}
+Friday challenge: Make the correct turn.
+\newblock MIT Lincoln Laboratory Beaver Works, July 2016.
+
+\bibitem{5}
+\url{http://www.ieee.org/web/publications/authors/transjnl/index.html}.
+\newblock IEEE Transactions \LaTeX and Microsoft Word Style Files.
+
+\end{thebibliography}
