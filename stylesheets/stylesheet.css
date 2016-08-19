@@ -422,4 +422,8 @@ Small Device Styles
     font-size: 11px;
   }
 
+  div.video-block {
+	width: 210px;
+  }
+
 }
