@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2016.8.7)  19 AUG 2016 12:35
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2016.8.7)  19 AUG 2016 18:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -580,21 +580,18 @@ Missing character: There is no Ä in font ptmr7t!
 Missing character: There is no ô in font ptmr7t!
 Missing character: There is no ‚ in font ptmr7t!
 Missing character: There is no Ä in font ptmr7t!
-Missing character: There is no ú in font ptmr7t!
-Missing character: There is no ‚ in font ptmr7t!
-Missing character: There is no Ä in font ptmr7t!
-Missing character: There is no ù in font ptmr7t!
-Missing character: There is no ‚ in font ptmr7t!
-Missing character: There is no Ä in font ptmr7t!
 Missing character: There is no ô in font ptmr7t!
 
-Underfull \hbox (badness 10000) in paragraph at lines 154--166
+Underfull \hbox (badness 1924) in paragraph at lines 161--173
+ \OT1/ptm/m/it/10 3) Two Point Con-troller: [][] \OT1/ptm/m/n/10 When cal-cu-la
+t-ing the er-ror
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 161--173
 
  []
 
-Missing character: There is no ‚ in font ptmr7t!
-Missing character: There is no Ä in font ptmr7t!
-Missing character: There is no ô in font ptmr7t!
 Missing character: There is no ‚ in font ptmr7t!
 Missing character: There is no Ä in font ptmr7t!
 Missing character: There is no ô in font ptmr7t!
@@ -602,8 +599,6 @@ Missing character: There is no ô in font ptmr7t!
 
 
 ]
-Missing character: There is no ¬ in font ptmr7t!
-Missing character: There is no † in font ptmr7t!
 Missing character: There is no ‚ in font ptmr7t!
 Missing character: There is no Ä in font ptmr7t!
 Missing character: There is no ú in font ptmr7t!
@@ -611,19 +606,19 @@ Missing character: There is no ‚ in font ptmr7t!
 Missing character: There is no Ä in font ptmr7t!
 Missing character: There is no ù in font ptmr7t!
 
-<images/visual_servo.png, id=19, 609.27625pt x 513.92pt>
+<images/visual_servo.png, id=20, 609.27625pt x 513.92pt>
 File: images/visual_servo.png Graphic file (type png)
 
 <use images/visual_servo.png>
-Package pdftex.def Info: images/visual_servo.png used on input line 203.
+Package pdftex.def Info: images/visual_servo.png used on input line 213.
 (pdftex.def)             Requested size: 255.89427pt x 215.84492pt.
 
-Overfull \hbox (3.89427pt too wide) in paragraph at lines 203--204
+Overfull \hbox (3.89427pt too wide) in paragraph at lines 213--214
 [][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 201--205
+Underfull \hbox (badness 10000) in paragraph at lines 211--215
 
  []
 
@@ -654,39 +649,39 @@ Missing character: There is no ‚ in font ptmr7t!
 Missing character: There is no Ä in font ptmr7t!
 Missing character: There is no ô in font ptmr7t!
 
-Underfull \hbox (badness 10000) in paragraph at lines 245--246
+Underfull \hbox (badness 10000) in paragraph at lines 255--256
 
  []
 
-<images/gazebo_track.png, id=26, 1126.2075pt x 506.89375pt>
+<images/gazebo_track.png, id=27, 1126.2075pt x 506.89375pt>
 File: images/gazebo_track.png Graphic file (type png)
 
 <use images/gazebo_track.png>
-Package pdftex.def Info: images/gazebo_track.png used on input line 249.
+Package pdftex.def Info: images/gazebo_track.png used on input line 259.
 (pdftex.def)             Requested size: 225.2375pt x 101.37695pt.
  [4 <./images/gazebo_track.png>]
-Underfull \hbox (badness 1688) in paragraph at lines 309--310
+Underfull \hbox (badness 1688) in paragraph at lines 319--320
 \OT1/ptm/m/n/10 mo-tion, sen-sors, ob-ject de-tec-tion, ob-ject avoid-ance, and
 
  []
 
-<plot_tf.pdf, id=30, 449.68pt x 338.26375pt>
+<plot_tf.pdf, id=31, 449.68pt x 338.26375pt>
 File: plot_tf.pdf Graphic file (type pdf)
  <use plot_tf.pdf>
-Package pdftex.def Info: plot_tf.pdf used on input line 365.
+Package pdftex.def Info: plot_tf.pdf used on input line 375.
 (pdftex.def)             Requested size: 252.0pt x 189.5606pt.
  (./report.bbl
 [5 <./plot_tf.pdf>]) [6
 
 ] (./report.aux) ) 
 Here is how much of TeX's memory you used:
- 14003 strings out of 493014
- 273759 string characters out of 6139326
- 321450 words of memory out of 5000000
- 17290 multiletter control sequences out of 15000+600000
+ 14004 strings out of 493014
+ 273768 string characters out of 6139326
+ 321453 words of memory out of 5000000
+ 17291 multiletter control sequences out of 15000+600000
  41649 words of font info for 79 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,10n,54p,1247b,628s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 55i,10n,54p,1123b,603s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/shar
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-dist/f
 onts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-dist/fonts/type1/pub
@@ -700,7 +695,7 @@ usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texmf
 -dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texmf-dist/fonts/type1/urw/t
 imes/utmbi8a.pfb></usr/share/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/
 share/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on report.pdf (6 pages, 320525 bytes).
+Output written on report.pdf (6 pages, 323158 bytes).
 PDF statistics:
  99 PDF objects out of 1000 (max. 8388607)
  70 compressed objects within 1 object stream
