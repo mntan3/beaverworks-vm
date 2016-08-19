@@ -11,6 +11,11 @@ M.~T. Boulet.
 Friday challenge: Make the correct turn.
 \newblock MIT Lincoln Laboratory Beaver Works, July 2016.
 
+\bibitem{gazebo_pic}
+A.~Anders, M.~Boulet, and S.~Karaman.
+\newblock mit-racecar.
+\newblock \url{https://github.com/mit-racecar}, 2016.
+
 \bibitem{5}
 \url{http://www.ieee.org/web/publications/authors/transjnl/index.html}.
 \newblock IEEE Transactions \LaTeX and Microsoft Word Style Files.

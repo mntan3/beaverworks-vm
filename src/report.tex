@@ -232,7 +232,7 @@ Use the scanner to find the largest contiguous open space and go there. This met
 \subsubsection{Potential field}
 The potential field method uses the idea of charges attracting and repelling to control the robot. The robot is repelled from obstacles, but also repelled from behind so it continues to move. We ended up this method because it was the most robust.
 
-For the blob detections, we used the version we made last week and added in the new colors. We came up with two possible solutions that we could have had working with more time. The first one was to average the HSV values of the pixels in each of the challenge images and hope that they are different enough that we could distinguish them. This would be messed up in different lightings, but since we aren’t penalized for incorrect labelling, we thought it could be worth it. The second method would to do some sort of statistical analysis of the HSV values of the pixels of the original images. Then, we could find the distribution for the images from the ZED camera and compare them to find the closest match. 
+For the blob detections, we used the version we made last week and added in the new colors. We came up with two possible solutions that we could have had working with more time. The first one was to average the HSV values of the pixels in each of the challenge images and hope that they are different enough that we could distinguish them. This would be messed up in different lightings, but since we aren’t penalized for incorrect labelling, we thought it could be worth it. [Show example] The second method would to do some sort of statistical analysis of the HSV values of the pixels of the original images. Then, we could find the distribution for the images from the ZED camera and compare them to find the closest match. [Show examples]
 \subsection{Results}
 In the final challenge, we used the potential field method. We ran out of time to execute the challenge images and we weren’t able to tune the color values well, so we missed a lot of colors in the actual challenge. We should have spent more time tuning the colors instead of focusing on the challenge images. We ended up coming in 3rd place with 36 points, which came from detecting four blobs and having two collisions. 
 
@@ -242,12 +242,18 @@ This week was dedicated to preparation for the Grand Prix Challenge race, but in
 \subsubsection{Tech Challenge 1}
 In the first tech challenge, the robot had to publish blob detections while it explored an unstructured space with obstacles.  
 \subsubsection{Tech Challenge 2}
-In the second tech challenge, the robot had to go along the racetrack and look for a colored blob that would be located at a forked intersection. A green blob would indicate an open shortcut that the robot could take while a red blob would indicate that the shortcut was blocked and the robot has to take a longer way around. 
+In the second tech challenge, the robot had to go along the racetrack and look for a colored blob that would be located at a forked intersection. A green blob would indicate an open shortcut that the robot could take while a red blob would indicate that the shortcut was blocked and the robot has to take a longer way around. \\ 
 \subsubsection{Grand Prix Race}
-[Get a picture]
+The Grand Prix Race is the culmination of all of our work done thus far in the summer. The cars were supposed to race around the track, avoiding nearby cars. In addition, one point in the track there was a fork with two different paths: a straight shortcut and a longer path curving on the right side. Based on the color of a blob placed in the intersection, the car would have to determine if the shortcut was open where a red blob indicated a blocked shortcut. 
+\begin{figure}[H]
+\includegraphics[scale=.20]{gazebo_track.png}
+\caption{Model of racetrack \cite{gazebo_pic}} 
+\end{figure}
 \subsection{Approach}
-how did we set about work and why
+Since this Grand Prix was the only task that was scored, we wanted to focus on that task and make sure we had enough time to test it. In addition, the 2nd tech challenge was part of the Grand Prix challenge so it wouldn't require extra work if the the Grand Prix code worked. Any extra time we had would be spent working on the 1st tech challenge. Since we would be switching locations to the Walker Memorial which had different lighting and was also prone to further lighting changes due to natural light, we tried to speed up the process of fine-tuning the HSV values using a calibration program.
 \subsection{Process}
+\subsubsection{Tech Challenge 1}
+This challenge builds on the program we had last week for reactive planning, which was able to detect red, yellow, green, blue, and pink blobs. We wanted to continue testing and improving on the challenge images implementation from last week. In addition, the colored blobs could also be circles, rhombi, x shapes, and plus signs so the program had to distinguish between them. We found that a quick way to distinguish between them would be to inscribe each shape in a rectangle and compare the ratios of the area of the shape to the area of the inscribed rectangle. [Draw pictures and show ratios] 
 Step by step process of what we did
 \subsection{Results}
 Results - what was tested, what was accomplished
@@ -306,7 +312,7 @@ What we’ll do differently next time \\
 
     % You can cite a book or paper by using \cite{reference}.
     % The references will be defined at the end of this .tex file in the bibliography
-    References should be cited as numbers, and should be ordered by their appearance (example: ``... as shown in \cite{HOP96}, ...'').
+    References should be cited as numbers, and should be ordered by their appearance (example: ``... as shown in , ...'').
     Only references that are actually cited can be listed in the references section.
     The references' format should be evident from the examples in this text.
 
