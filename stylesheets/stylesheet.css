@@ -367,6 +367,10 @@ Full-Width Styles
 #footer_wrap {
   background: #212121;
 }
+  
+div.video-block {
+  width: 33%;
+}
 
 
 
@@ -423,7 +427,7 @@ Small Device Styles
   }
 
   div.video-block {
-	width: 210px;
+	width: 33%;
   }
 
 }
