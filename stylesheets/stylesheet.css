@@ -368,11 +368,6 @@ Full-Width Styles
   background: #212121;
 }
   
-div.video-block {
-  width: 33%;
-}
-
-
 
 /*******************************************************************************
 Small Device Styles
@@ -426,8 +421,5 @@ Small Device Styles
     font-size: 11px;
   }
 
-  div.video-block {
-	width: 33%;
-  }
 
 }
