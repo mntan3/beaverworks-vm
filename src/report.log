@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2016.8.7)  19 AUG 2016 22:37
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2016.8.7)  20 AUG 2016 00:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -575,12 +575,6 @@ Package gensymb Warning: Not defining \micro.
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-Missing character: There is no â in font ptmr7t!
-Missing character: There is no € in font ptmr7t!
-Missing character: There is no ™ in font ptmr7t!
-Missing character: There is no â in font ptmr7t!
-Missing character: There is no € in font ptmr7t!
-Missing character: There is no ™ in font ptmr7t!
 
 Underfull \hbox (badness 1924) in paragraph at lines 161--173
  \OT1/ptm/m/it/10 3) Two Point Con-troller: [][] \OT1/ptm/m/n/10 When cal-cu-la
@@ -588,13 +582,15 @@ t-ing the er-ror
  []
 
 
+Underfull \hbox (badness 2744) in paragraph at lines 161--173
+\OT1/ptm/m/n/10 throw off the read-ing if only one mea-sure-ment were
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 161--173
 
  []
 
-Missing character: There is no â in font ptmr7t!
-Missing character: There is no € in font ptmr7t!
-Missing character: There is no ™ in font ptmr7t!
 [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
@@ -615,33 +611,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 212--216
 
  []
 
-[2 <./images/visual_servo.png>]
-Missing character: There is no â in font ptmr7t!
-Missing character: There is no € in font ptmr7t!
-Missing character: There is no ™ in font ptmr7t!
-Missing character: There is no â in font ptmr7t!
-Missing character: There is no € in font ptmr7t!
-Missing character: There is no ™ in font ptmr7t!
-Missing character: There is no â in font ptmr7t!
-Missing character: There is no € in font ptmr7t!
-Missing character: There is no ™ in font ptmr7t!
-Missing character: There is no â in font ptmr7t!
-Missing character: There is no € in font ptmr7t!
-Missing character: There is no ™ in font ptmr7t!
-Missing character: There is no â in font ptmr7t!
-Missing character: There is no € in font ptmr7t!
-Missing character: There is no ™ in font ptmr7t!
-Missing character: There is no â in font ptmr7t!
-Missing character: There is no € in font ptmr7t!
-Missing character: There is no ™ in font ptmr7t!
- [3]
-Missing character: There is no â in font ptmr7t!
-Missing character: There is no € in font ptmr7t!
-Missing character: There is no ™ in font ptmr7t!
-Missing character: There is no â in font ptmr7t!
-Missing character: There is no € in font ptmr7t!
-Missing character: There is no ™ in font ptmr7t!
-
+[2 <./images/visual_servo.png>] [3]
 Underfull \hbox (badness 10000) in paragraph at lines 258--259
 
  []
@@ -652,65 +622,70 @@ File: images/gazebo_track.png Graphic file (type png)
 <use images/gazebo_track.png>
 Package pdftex.def Info: images/gazebo_track.png used on input line 262.
 (pdftex.def)             Requested size: 225.2375pt x 101.37695pt.
- [4 <./images/gazebo_track.png>]
-<images/hplot.jpg, id=31, 481.8pt x 481.8pt>
-File: images/hplot.jpg Graphic file (type jpg)
- <use images/hplot.jpg>
-Package pdftex.def Info: images/hplot.jpg used on input line 277.
-(pdftex.def)             Requested size: 240.8994pt x 240.8994pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 275--279
+<images/ratios.jpg, id=28, 432.61626pt x 374.39874pt>
+File: images/ratios.jpg Graphic file (type jpg)
+ <use images/ratios.jpg>
+Package pdftex.def Info: images/ratios.jpg used on input line 271.
+(pdftex.def)             Requested size: 216.3076pt x 187.19891pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 269--273
 
  []
 
-<images/splot.jpg, id=32, 481.8pt x 481.8pt>
+[4 <./images/gazebo_track.png>] <images/hplot.jpg, id=32, 481.8pt x 481.8pt>
+File: images/hplot.jpg Graphic file (type jpg)
+
+<use images/hplot.jpg>
+Package pdftex.def Info: images/hplot.jpg used on input line 282.
+(pdftex.def)             Requested size: 240.8994pt x 240.8994pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 280--284
+
+ []
+
+<images/splot.jpg, id=33, 481.8pt x 481.8pt>
 File: images/splot.jpg Graphic file (type jpg)
  <use images/splot.jpg>
-Package pdftex.def Info: images/splot.jpg used on input line 281.
+Package pdftex.def Info: images/splot.jpg used on input line 286.
 (pdftex.def)             Requested size: 240.8994pt x 240.8994pt.
 
-<images/vplot.jpg, id=33, 481.8pt x 481.8pt>
+<images/vplot.jpg, id=34, 481.8pt x 481.8pt>
 File: images/vplot.jpg Graphic file (type jpg)
  <use images/vplot.jpg>
-Package pdftex.def Info: images/vplot.jpg used on input line 285.
+Package pdftex.def Info: images/vplot.jpg used on input line 290.
 (pdftex.def)             Requested size: 240.8994pt x 240.8994pt.
 
-Underfull \vbox (badness 3758) has occurred while \output is active []
+Underfull \vbox (badness 1748) has occurred while \output is active []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 288--309
-
- []
-
-[5 <./images/hplot.jpg> <./images/splot.jpg> <./images/vplot.jpg>]
-Underfull \hbox (badness 1688) in paragraph at lines 358--359
-\OT1/ptm/m/n/10 mo-tion, sen-sors, ob-ject de-tec-tion, ob-ject avoid-ance, and
+ [5 <./images/ratios.jpg> <./images/hplot.jpg> <./images/splot.jpg>]
+Underfull \hbox (badness 10000) in paragraph at lines 293--314
 
  []
 
-(./report.bbl) [6] (./report.aux) ) 
+(./report.bbl) [6 <./images/vplot.jpg>] (./report.aux) ) 
 Here is how much of TeX's memory you used:
- 14015 strings out of 493014
- 273973 string characters out of 6139326
- 323439 words of memory out of 5000000
- 17299 multiletter control sequences out of 15000+600000
+ 14021 strings out of 493014
+ 274090 string characters out of 6139326
+ 320440 words of memory out of 5000000
+ 17304 multiletter control sequences out of 15000+600000
  41649 words of font info for 79 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,9n,54p,1015b,603s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texmf-dist/fonts/enc/dvips/base/
-8r.enc}</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/s
-hare/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmr7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></
-usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texmf
--dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texmf-dist/fonts/type1/urw/t
-imes/utmbi8a.pfb></usr/share/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/
-share/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on report.pdf (6 pages, 318220 bytes).
+ 55i,9n,54p,1286b,603s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texmf-dist/
+fonts/enc/dvips/base/8r.enc}</usr/share/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb>
+</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmr7.pfb></usr/share/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.
+pfb></usr/share/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texmf-d
+ist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texmf-dist/fonts/type1/urw/ti
+mes/utmr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on report.pdf (6 pages, 331805 bytes).
 PDF statistics:
- 76 PDF objects out of 1000 (max. 8388607)
+ 77 PDF objects out of 1000 (max. 8388607)
  51 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 38 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 43 words of extra memory for PDF output out of 10000 (max. 10000000)
 

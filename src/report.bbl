@@ -22,6 +22,10 @@ Contours: Getting started.
 \newblock
   \url{http://docs.opencv.org/trunk/d4/d73/tutorial_py_contours_begin.html}.
 
+\bibitem{colorspace-handout}
+Monday lab 1.
+\newblock MIT Lincoln Laboratory Beaver Works, July 2016.
+
 \bibitem{gazebo_pic}
 A.~Anders, M.~Boulet, and S.~Karaman.
 \newblock mit-racecar.
