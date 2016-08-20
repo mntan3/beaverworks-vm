@@ -148,7 +148,7 @@
 % Main Part
 \section{Week 1}
 \subsection{Technical Goal}
-In the first week, the learning objective was to get experience in working with the sensors and actuation of the robot and to also learn about control systems. The end-of-week challenge consisted of being able to follow a left and right wall at a desired distanced away independent from the starting position from the wall. 
+In the first week, the learning objective was to get experience in working with the sensors and actuation of the robot and to also learn about control systems. The end-of-week challenge consisted of being able to follow a left and right wall at a desired distanced away at different starting positions from the wall. 
 \subsection{Approach}
 The teams were required to use lidar to sense the wall but they were free to implement a state controller of their choice.
 \subsubsection{Bang Bang Controller}The simplest of the controllers is using a Bang Bang controller, which states that if the robot is too close, it should turn away and if too far, turn towards the wall. 
@@ -225,39 +225,39 @@ We started with getting a good blob detections algorithm. Then we came up with a
 At the very last minute we were able to get the robot to turn and follow properly when it got to the wall. Unfortunately, it only worked on the green side because we figured out later that there was a bug in our code where the isGreen variable we were modifying was a local variable so it wasn't stored between functions. Then during the race, our robot didn’t move probably due to lack of battery. After we charged it, the program did not work the same way and the gears had a glitch, so unfortunately we couldn’t finish. Out of all of the teams, only 2 were able to finish. We learned important lessons in communicating to make sure everything is getting done and to make sure the robot is charging. 
 \section{Week 3}
 \subsection{Technical goals}
-Our goal was to use reactive-based planning-based on what the robot can see locally in order to explore unbounded space while avoiding obstacles. We also had to detect blobs along the way and save the picture with the blob color and locations indicated. To add on from the image detection from last week, additional colors to detect were added(blue and yellow), and there was a challenge task to detect images of Ari, Sertac, a cat, and a robot. 
+This week, the focus was on how to get around a track and how to avoid obstacles. Our final challenge was to use reactive-based planning based on lidar in order to explore unbounded space while avoiding obstacles. We also had to detect blobs along the way and save the picture with the blob color and locations indicated. To add on from the image detection from last week, additional colors to detect were added(blue and yellow), and there was a challenge task to detect images of Ari, Sertac, a cat, and a robot. 
 \subsection{Approach}
-Based on the open-ended nature of this week’s assignment, we had a team meeting where we discussed a lot of possible methods for obstacle avoidance and ways to take the shortcut. We first focused on ways to get around without obstacles. We had different people explore different ideas. In the end, we ended up using a potential field method that we learned about in a lecture, which was the most effective.
+Based on the open-ended nature of this week’s assignment, we had a team meeting where we discussed a lot of possible methods for obstacle avoidance and ways to conditionally take a shortcut. We first focused on ways to get around without obstacles. We had different people explore different ideas. In the end, we ended up using a potential field method that we learned about in a lecture, which was the most effective.
 \subsection{Process}
-Here are the methods we explored in the order we considered them
+Here are some of the methods we explored
 \subsubsection{Right wall follow}
-If there are no obstacles and we’re not supposed to take the shortcut, we thought that a simple wall follow should be sufficient. However, we found that because of the sharp corner, it wouldn’t be an option. As the robot approached the corner, it could never determine that it should turn until it had already run into the wall, since the robot looks out to the side and not directly in front of it. After we adjusted the field of vision to angled further up front, it was able to turn at the corner only at very low speeds. 
+If there are no obstacles and we’re not supposed to take the shortcut, we thought that a simple wall follow should be sufficient. However, we found that because of the sharp corner, it wouldn’t be an option. As the robot approached the corner, it could never determine that it should turn until it had already run into the wall, since the robot looks out to the side and not directly in front of it. After we adjusted the field of vision to angles further up front, it was able to turn at the corner only at very low speeds. 
 \subsubsection{Equal Distance wall following}
 Assuming there are no obstacles, an effective way to take the shortcut would be to simply follow the wall on both sides by trying to keep the distances on the left and the right the same. When the robot got to the shortcut, it would see a large spike in the laser reading for the left side and therefore turn left to account for it. However, it was determined that this model would break down with obstacles. 
 \subsubsection{Obstacle detect}
-Look ahead and if obstacles are detected on the left side, take the right lane and vice versa. If both left lane and right lane have obstacles, take the center lane. The idea of changing the desired distance of the wall follow based on where the obstacles were was solid, but too many assumptions were made in the model
+The robot would look ahead and if obstacles are detected on the left side, it would take the right lane and vice versa. If both left lane and right lane have obstacles, then it would take the center lane. The idea of changing the desired distance of the wall follow based on where the obstacles were is valid, but too many assumptions were made in the model like how the object had to be in either the left, middle, or right. 
 \subsubsection{Left/Right Wall Follow}
 If there are no obstacles, follow the left wall the whole time, then switch to following the right wall when there is the shortcut to ensure that the robot takes the long way across.
 \subsubsection{State machine}
-We explored enough options for the case of wanting to take the shortcut and not taking the shortcut, along with how to avoid obstacles that based on where it is, that we could incorporate them all into a state machine. [Possible elaborate]
+We explored enough options for the cases of wanting to take the shortcut and not taking the shortcut, along with how to avoid obstacles, that we could incorporate them all into a state machine. It would perform some sort of wall follow as a default, but if obstacles are detected, the obstacle avoidance program would take precedence. 
 \subsubsection{Open space}
-Use the scanner to find the largest contiguous open space and go there. This method could work well, especially for avoiding obstacles. We ran out of testing time to try it out, however. 
+Use the lidar to find the largest contiguous open space and go there. This method could work well, especially for avoiding obstacles. We ran out of testing time to try it out, however. 
 \subsubsection{Potential field}
-The potential field method uses the idea of charges attracting and repelling to control the robot. The robot is repelled from obstacles, but also repelled from behind so it continues to move. We ended up this method because it was the most robust. This implementation was the most effective and also the most simple at under 20 lines of code. [Diagram to explain]
+The potential field method uses the idea of charges attracting and repelling to control the robot. The robot is repelled from obstacles, but also repelled from behind so it continues to move forwards. We ended up this method because it was the most robust to all of the possible scenarios. This implementation was the most effective and also the most simple at under 20 lines of code. 
 
-For the blob detections, we used the version we made last week and added in the new colors. We came up with two possible solutions that we could have had working with more time. The first one was to average the HSV values of the pixels in each of the challenge images and hope that they are different enough that we could distinguish them. This would be messed up in different lightings, but since we aren’t penalized for incorrect labelling, we thought it could be worth it. [Show example] The second method would to do some sort of statistical analysis of the HSV values of the pixels of the original images. Then, we could find the distribution for the images from the ZED camera and compare them to find the closest match. This process was simplified because we found cv2 functions for calculating and comparing histograms. [Show examples] Since this method seemed more robust to lighting changes, we started implementing this method. 
+\subsubsection{Challenge blob detection} For the blob detections, we used the version we made last week and added in the new colors. We came up with two possible solutions that we could have had working with more time. The first one was to average the HSV values of the pixels in each of the challenge images and hope that they are different enough that we could distinguish them. This would be messed up in different lightings, but since we aren’t penalized for incorrect labeling, we thought it could be worth it. [Show example] The second method would to do some sort of statistical analysis of the HSV values of the pixels of the original images. Then, we could find the distribution for the blobs from the ZED camera and compare them to find the closest match. This process was simplified because we found cv2 functions for calculating and comparing histograms. [Show examples] Since this method seemed more robust to lighting changes, we started implementing this method. 
 \subsection{Results}
-In the final challenge, we used the potential field method. We ran out of time to execute the challenge images and we weren’t able to tune the color values well, so we missed a lot of colors in the actual challenge. We should have spent more time tuning the colors instead of focusing on the challenge images. We ended up coming in 3rd place with 36 points, which came from detecting four blobs and having two collisions. 
+In the final challenge, we used the potential field method. We ran out of time to execute the challenge images and we weren’t able to tune the color values well, so we missed a lot of colors in the actual challenge. We should have spent more time tuning the colors instead of focusing on the challenge images since in the end, none of the teams could detect the challenge images. We ended up coming in 3rd place with 36 points, which came from detecting four blobs and having two collisions. 
 
 \section{Week 4}
 \subsection{Technical goals}
 This week was dedicated to preparation for the Grand Prix Challenge race, but in addition there were two tech challenges that would be informally showcased. 
 \subsubsection{Tech Challenge 1}
-In the first tech challenge, the robot had to publish blob detections while it explored an unstructured space with obstacles.  
+In the first tech challenge, the robot had to publish blob detections while it explored an unstructured space with obstacles. This was very similar to the task from week 3
 \subsubsection{Tech Challenge 2}
-In the second tech challenge, the robot had to go along the racetrack and look for a colored blob that would be located at a forked intersection. A green blob would indicate an open shortcut that the robot could take while a red blob would indicate that the shortcut was blocked and the robot has to take a longer way around. \\ 
+In the second tech challenge, the robot had to go along the racetrack and look for a colored blob that would be located at a forked intersection. A green blob would indicate an open shortcut that the robot could take while a red blob would indicate that the shortcut was blocked and the robot had to take a longer way around. \\ 
 \subsubsection{Grand Prix Race}
-The Grand Prix Race is the culmination of all of our work done thus far in the summer. The cars were supposed to race around the track, avoiding nearby cars. In addition, one point in the track there was a fork with two different paths: a straight shortcut and a longer path curving on the right side. Based on the color of a blob placed in the intersection, the car would have to determine if the shortcut was open where a red blob indicated a blocked shortcut. 
+The Grand Prix Race is the culmination of all of our work done thus far in the summer. The cars were supposed to race around the track, avoiding nearby cars. In addition, at one point in the track there was a fork with two different paths: a straight shortcut and a longer path curving on the right side. Based on the color of a blob placed in the intersection, the car would have to determine if the shortcut was open given that a red blob indicated a blocked shortcut. 
 \begin{figure}[H]
 \includegraphics[scale=.20]{gazebo_track.png}
 \caption{Model of racetrack \cite{gazebo_pic}} 
@@ -271,6 +271,42 @@ This challenge builds on the program we had last week for reactive planning, whi
 We decided to try modifying the reactive obstacle detection program from last week that used potential fields to guide the robot away from obstacles. This program was the most robust to being able to deal with all different kinds of obstacle configurations. The only modification that seemed to be needed was a larger imaginary charge behind the robot so it wasn't tempted to go backwards. In addition, we noticed that the track contained 4 major left turns and 2 major right turns(one of these being the intesection). When on a left turn, the most efficient path would be to stick to the left wall more, minimizing the distance. [Insert diagram]. Since all of the cars have the same maximum speed, we realized that we could get an edge by staying on the inside lane. We implemented this by adding a boost constant to the force to the left when calculating the vector of least resistance. This required a lot of tuning to ensure that it would favor the left while not crashing into it. 
 \subsubsection{Detecting shortcut availability}
 Instead of calibrating the robot to look for red or green, the robot looked for only red. If there was red detected, it would take the long way. Otherwise, it would assume that the shortcut is open. In order to make the right turn successfully we had to modify the forces on the robot to make it favor the right side. We had a problem with as the robot was turning, when it lost sight of the red blob it would stop turning. In addition, the left wall affinity would cause the robot to veer left so aggresively after turning that it would crash into the wall. We had to set up a counter that would execute as soon as it saw the red blob. For the first part of the counter, it would highly favor right turning until it had basically finished the turn. For the second part of the counter, it would switch lanes to the center to ease the transition to the left wall. Then, lastly the default track navigation code would continue as normal. 
+\subsubsection{Color calibration}
+Since there seemed to be a problem with color thresholds changing with different lightings, we made a calibration program that would use the ZED Camera to take a picture of the blob. Then, we could analyze the distributions of the H,S, and V values using a histogram. The following are the histograms from data taken on August 3rd. \\
+\begin{figure}[H]
+\includegraphics[scale=.50]{hplot.jpg}
+\caption{Distribution of the Hues: Values range from 0 to 5}
+\end{figure}
+\begin{figure}[H]
+\includegraphics[scale=.50]{splot.jpg}
+\caption{Distribution of the Saturation: Values range from 190 to 220}
+\end{figure}
+\begin{figure}[H]
+\includegraphics[scale=.50]{vplot.jpg}
+\caption{Distribution of the Values: Values range from 125 to 150}
+\end{figure}
+Based on this data, we had an estimate of what we should set the hsv values to. However, we widened the threshold past what the histogram showed because the pictures for the data were taken under ideal situations. In reality, the colors would be affected my shadows of people and distance away from the blob. In this case, it was preferable to widen the range to the maximum values that wouldn't start picking up other objects as the blob, since our issue was that it was missing the red blob. We ended up using the values shown below \\
+    \begin{table}[!hbt]
+        % Center the table
+        \begin{center}
+        % Title of the table
+        \caption{HSV values for red}
+        % Table itself: here we have two columns which are centered and have lines to the left, right and in the middle: |c|c|
+        \begin{tabular}{|c|c|c|c|}
+            % To create a horizontal line, type \hline
+            \hline
+            % To end a column type &
+            % For a linebreak type \\
+              & Hue & Saturation & Value\\
+            \hline
+            Lower Bound& 0 & 150 & 80 \\
+            \hline
+            Upper Bound & 6 & 255 & 255 \\
+            \hline
+        \end{tabular}
+        \end{center}
+    \end{table} \\
+
 \subsection{Results}
 \subsubsection{Tech Challenge 1}
 Our robot was able to navigate while avoiding obstacles. It was able to detect colored blobs, but unfortunately we didn't put enough time into testing to have it reliably detect the challenge images or the alternate shapes.
@@ -324,70 +360,6 @@ Our team did really well. We were ranked 1st out of all 9 teams in both the time
 
 \par Going forward, I will remember the importance of leaving enough time to test and how to stick to a list of priorities. 
 
-\section{How to do stuff}
-    Its appearance should be as close to this document as possible to achieve consistency in the proceedings.
-
-    % You can cite a book or paper by using \cite{reference}.
-    % The references will be defined at the end of this .tex file in the bibliography
-    References should be cited as numbers, and should be ordered by their appearance (example: ``... as shown in , ...'').
-    Only references that are actually cited can be listed in the references section.
-    The references' format should be evident from the examples in this text.
-
-    References should be of academic character and should be published and accessible.
-    Your advisor can answer your questions regarding literature research.
-    You must cite all used sources.
-    Examples of good references include text books and scientific journals or conference proceedings.
-    If possible, citing internet pages should be avoided. In particular, Wikipedia is \emph{not} an appropriate reference in academic reports.
-    Avoiding references in languages other than English is recommended.
-
-    % You can reference tables and figure by using the \ref{label} command. Each table and figure needs to have a UNIQUE label.
-    Figures and tables should be labeled and numbered, such as in Table~\ref{tab:simParameters} and Fig.~\ref{fig:tf_plot}.
-
-    % This is how you define a table: the [!hbt] means that LaTeX is forced (by the !) to place the table exactly here (by h), or if that doesnt work because of a pagebreak or so, it tries to place the table to the bottom of the page (by b) or the top (by t).
-    \begin{table}[!hbt]
-        % Center the table
-        \begin{center}
-        % Title of the table
-        \caption{Simulation Parameters}
-        \label{tab:simParameters}
-        % Table itself: here we have two columns which are centered and have lines to the left, right and in the middle: |c|c|
-        \begin{tabular}{|c|c|}
-            % To create a horizontal line, type \hline
-            \hline
-            % To end a column type &
-            % For a linebreak type \\
-            Information message length & $k=16000$ bit \\
-            \hline
-            Radio segment size & $b=160$ bit \\
-            \hline
-            Rate of component codes & $R_{cc}=1/3$\\
-            \hline
-            Polynomial of component encoders & $[1 , 33/37 , 25/37]_8$\\
-            \hline
-        \end{tabular}
-        \end{center}
-    \end{table}
-
-    % If you have questions about how to write mathematical formulas in LaTeX, please read a LaTeX book or the 'Not So Short Introduction to LaTeX': tobi.oetiker.ch/lshort/lshort.pdf
-
-    % This is how you include a eps figure in your document. LaTeX only accepts EPS or TIFF files.
-    \begin{figure}[!hbt]
-        % Center the figure.
-        \begin{center}
-        % Include the eps file, scale it such that it's width equals the column width. You can also put width=8cm for example...
-        \includegraphics[width=\columnwidth]{plot_tf}
-        % Create a subtitle for the figure.
-        \caption{Simulation results on the AWGN channel. Average throughput $k/n$ vs $E_s/N_0$.}
-        % Define the label of the figure. It's good to use 'fig:title', so you know that the label belongs to a figure.
-        \label{fig:tf_plot}
-        \end{center}
-    \end{figure}
-
-\section{Filling this page}
-    Aallia est omnis divisa in partes tres, quarum unam incolunt Belgae, aliam Aquitani, tertiam qui ipsorum lingua Celtae, nostra Galli appellantur. Gallos ab Aquitanis Garumna flumen, a Belgis Matrona et Sequana dividit. Horum omnium fortissimi sunt Belgae, propterea quod a cultu atque humanitate provinciae longissime absunt, minimeque ad eos mercatores saepe commeant atque ea quae ad effeminandos animos pertinent important, proximique sunt Germanis, qui trans Rhenum incolunt, quibuscum continenter bellum gerunt. Qua de causa Helvetii quoque reliquos Gallos virtute praecedunt, quod fere cotidianis proeliis cum Germanis contendunt, cum aut suis finibus eos prohibent aut ipsi in eorum finibus bellum gerunt. Eorum una, pars, quam Gallos obtinere dictum est, initium capit a flumine Rhodano, continetur Garumna flumine, Oceano, finibus Belgarum, attingit etiam ab Sequanis et Helvetiis flumen Rhenum, vergit ad septentriones. Belgae ab extremis Galliae finibus oriuntur, pertinent ad inferiorem partem fluminis Rheni, spectant in septentrionem et orientem solem.
-
-\section{Conclusion}
-    This section summarizes the paper.
 \nocite{5}
 % Now we need a bibliography:
 \bibliographystyle{unsrt}
