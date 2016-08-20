@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2016.8.7)  19 AUG 2016 20:02
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2016.8.7)  19 AUG 2016 20:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -667,10 +667,10 @@ Package pdftex.def Info: plot_tf.pdf used on input line 378.
 
 ] (./report.aux) ) 
 Here is how much of TeX's memory you used:
- 14005 strings out of 493014
- 273781 string characters out of 6139326
+ 14006 strings out of 493014
+ 273799 string characters out of 6139326
  322456 words of memory out of 5000000
- 17292 multiletter control sequences out of 15000+600000
+ 17293 multiletter control sequences out of 15000+600000
  41649 words of font info for 79 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,10n,54p,1083b,603s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -687,7 +687,7 @@ usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texmf
 -dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texmf-dist/fonts/type1/urw/t
 imes/utmbi8a.pfb></usr/share/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/
 share/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on report.pdf (6 pages, 324264 bytes).
+Output written on report.pdf (6 pages, 324472 bytes).
 PDF statistics:
  99 PDF objects out of 1000 (max. 8388607)
  70 compressed objects within 1 object stream

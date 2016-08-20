@@ -17,7 +17,10 @@ Friday challenge: Make the correct turn.
 \newblock MIT Lincoln Laboratory Beaver Works, July 2016.
 
 \bibitem{opencv-docs}
-
+Contours: Getting started.
+\newblock doxygen, August 2016.
+\newblock
+  \url{http://docs.opencv.org/trunk/d4/d73/tutorial_py_contours_begin.html}.
 
 \bibitem{gazebo_pic}
 A.~Anders, M.~Boulet, and S.~Karaman.
